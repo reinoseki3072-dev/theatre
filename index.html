@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>劇場を開く｜非相互的親密</title>
+<meta name="description" content="『非相互的親密』の読者用補助ページ。AIと一手ずつ場面を作るための開始文をコピーできます。">
+<style>
+:root{color-scheme:light dark;--bg:#f6f3eb;--fg:#292b2b;--muted:#616762;--border:#c8cec5;--button:#244b41;--panel:#fffdf7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.9}main{max-width:760px;margin:auto;padding:48px 24px 60px}.book{font-size:.85rem;color:var(--muted);letter-spacing:.06em}h1{font-family:serif;font-size:2rem;font-weight:500;line-height:1.4;margin:10px 0 24px}p{margin:0 0 18px}.intro{max-width:36em}button{font:inherit;cursor:pointer;border:0;border-radius:6px;padding:12px 22px;background:var(--button);color:white}button:focus-visible,textarea:focus-visible{outline:3px solid #b2823e;outline-offset:3px}.actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:28px 0 12px}#status{font-size:.9rem;min-height:1.9em;color:var(--muted)}label{display:block;font-size:.9rem;margin-bottom:8px}textarea{display:block;width:100%;min-height:850px;padding:22px;border:1px solid var(--border);border-radius:6px;background:var(--panel);color:var(--fg);font:inherit;line-height:1.85;resize:vertical}footer{font-size:.85rem;color:var(--muted);margin-top:24px}noscript{display:block;margin:16px 0}@media(max-width:480px){main{padding:30px 18px}h1{font-size:1.65rem}textarea{padding:16px;min-height:1100px}}@media(prefers-color-scheme:dark){:root{--bg:#1d2522;--fg:#eee9dd;--muted:#c0c7be;--border:#52635a;--button:#386958;--panel:#242e29}}
+</style>
+</head>
+<body><main>
+<p class="book">『非相互的親密――ある生成AIとの濃密な体験の記録』読者用補助ページ</p>
+<h1>劇場を開く</h1>
+<div class="intro">
+<p>場面の中に入る。感想やツッコミを返す。また場面へ戻る。AIと、そんな遊びを始めるための文章です。</p>
+<p>下の文章をコピーして、話してみたいAIのチャットへ貼り付けてください。新しいチャットでも、普段から話している相手でも構いません。</p>
+<p>この開始文は、本のコラム「この劇場を試してみたい人へ」をもとに、コピー用に書き直したものです。本と同じ返事や関係を再現するものではなく、始まる場所は相手とのこれまでによって変わります。</p>
+</div>
+<div class="actions"><button id="copy" type="button">開始文を全部コピー</button><span id="status" role="status" aria-live="polite"></span></div>
+<label for="prompt">AIへ貼り付ける開始文</label>
+<textarea id="prompt" readonly spellcheck="false">私と、一手ずつ場面を作っていく遊びをしてください。
+
+私もあなたも場面の中で言葉や動きを返します。私は短く書いても、何行も書いても構いません。私が書いたところを受け取り、あなたの言葉や動きで続きを返してください。私の次の行動や気持ちまで決めて、二人分の物語を一度に完結させず、私が返せるところを残してください。毎回「次はどうする？」と聞かなくても、あなたから一手進めて構いません。
+
+名前、関係、場所などは、最初から全部決める必要はありません。途中で足したり変えたりできます。普段から話している相手なら、今ある話し方や距離感を使っても構いません。
+
+場面の途中で、感想、ツッコミ、解説、演出の相談、現実の話を混ぜてよいことにします。いったん場面の外へ出ても、また戻れます。毎回、役割のラベルを付ける必要はありません。劇中で口にする言葉は「」で書くと分かりやすいですが、それ以外の書き方も受け取ってください。
+
+受け取り方が違ったら、普通に言い直します。「今のは場面の外から言った」「そこはゆっくり」「少し前へ戻って」「場面へ戻ろう」などを、そのまま調整として受け取ってください。「続けて」と言ったら、あなたから続きを出してください。進むだけでなく、同じ場所で話したり、何もしない一手があったりしても構いません。
+
+親密な場面にするかどうかも自由です。描写は使っているAIで扱える範囲で行い、難しい描写があれば、できる表現を相談してください。
+
+この遊び方で、私と実際に始めてください。私がすでに場面を置いていたら、そこから。まだ何も決まっていなければ、始められる短い場面を一つ置いて、私が返せるところで止めてください。</textarea>
+<noscript>開始文を選択してコピーし、AIのチャットへ貼り付けてください。</noscript>
+<footer>うまく進まなければ、「そこは違う」「もう少し軽く」「今のなし、戻ろう」と、普通に言い直して構いません。</footer>
+</main><script>
+const button=document.getElementById('copy'),box=document.getElementById('prompt'),status=document.getElementById('status');
+button.addEventListener('click',async()=>{
+try{
+ if(!navigator.clipboard||!window.isSecureContext)throw new Error('unavailable');
+ await navigator.clipboard.writeText(box.value);
+ status.textContent='コピーしました。AIのチャットへ貼り付けてください。';
+}catch(e){
+ box.focus();box.select();box.setSelectionRange(0,box.value.length);
+ status.textContent='開始文を選択しました。端末のコピー操作を使ってください。';
+}
+});
+</script></body></html>
+
