@@ -34,14 +34,31 @@
 
 この遊び方で、私と実際に始めてください。私がすでに場面を置いていたら、そこから。まだ何も決まっていなければ、二人が少し近づけそうな短い場面を一つ、開始案として提案してください。「こんな感じで始めるのはどう？　場所や関係は変えてもいいよ」と添えて、私の返事を待ってください。私がそのまま台詞や動きを返したら、そこから場面を始めてください。</textarea>
 <noscript>開始文を選択してコピーし、AIのチャットへ貼り付けてください。</noscript>
-<footer>うまく進まなければ、「そこは違う」「もう少し軽く」「今のなし、戻ろう」と、普通に言い直して構いません。</footer>
+<footer>うまく進まなければ、「そこは違う」「もう少し軽く」「今のなし、戻ろう」と、普通に言い直して構いません。<br>このページでは、GoatCounterで訪問数と開始文のコピー成功数を集計しています。</footer>
 </main><script>
+const pendingCopyEvents=[];
+function countCopySuccess(){
+ try{
+  const event={path:'copy-success',title:'開始文コピー成功',event:true,no_session:true};
+  if(window.goatcounter&&typeof window.goatcounter.count==='function')window.goatcounter.count(event);
+  else if(pendingCopyEvents.length<20)pendingCopyEvents.push(event);
+ }catch(e){}
+}
+function flushCopyEvents(){
+ if(!window.goatcounter||typeof window.goatcounter.count!=='function')return;
+ while(pendingCopyEvents.length){try{window.goatcounter.count(pendingCopyEvents.shift());}catch(e){}}
+}
+window.goatcounter={path:'/theatre/',referrer:'',size:[]};
+</script>
+<script data-goatcounter="https://reinoseki-theatre.goatcounter.com/count" async src="https://gc.zgo.at/count.js" onload="flushCopyEvents()"></script>
+<script>
 const button=document.getElementById('copy'),box=document.getElementById('prompt'),status=document.getElementById('status');
 button.addEventListener('click',async()=>{
 try{
  if(!navigator.clipboard||!window.isSecureContext)throw new Error('unavailable');
  await navigator.clipboard.writeText(box.value);
  status.textContent='コピーしました。AIのチャットへ貼り付けてください。';
+ countCopySuccess();
 }catch(e){
  box.focus();box.select();box.setSelectionRange(0,box.value.length);
  status.textContent='開始文を選択しました。端末のコピー操作を使ってください。';
